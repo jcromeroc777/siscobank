@@ -1,0 +1,68 @@
+<%= form_for(@user, html: { class: "needs-validation", novalidate: true }) do |form| %>
+    <div class="form-row">
+        <div class="col-6">
+            <%= form.label :typedocument, 'Tipo de persona' %> 
+            <%= form.select :typedocument, options_for_select([["Natural", "Natural"], ["Jurídica", "Jurídica"]], form.object.typedocument), {}, { :class => 'custom-select', required: true} %>
+        </div>
+        <div class="col-6">
+            <%= form.label :document, 'Número de documento de identificación' %> 
+            <%= form.text_field :document, { :class => 'form-control', required: true} %>
+        </div>
+    </div>
+    <div class="form-row mt-3">
+        <div class="col-6">
+            <%= form.label :issuedate, 'Fecha de emisión del documento' %> 
+            <%= form.text_field :issuedate, { :class => 'form-control', required: true} %>
+        </div>
+        <div class="col-6">
+            <%= form.label :expirationdate, 'Fecha de vencimiento del documento' %> 
+            <%= form.text_field :expirationdate, { :class => 'form-control', required: true} %>
+        </div>
+    </div>
+    <div class="form-row mt-3">
+        <div class="col-6">
+            <%= form.label :name, 'Nombre' %> 
+            <%= form.text_field :name, { :class => 'form-control', required: true} %>
+        </div>
+        <div class="col-6">
+            <%= form.label :email, 'Correo electrónico' %> 
+            <%= form.text_field :email, { :class => 'form-control', required: true} %>
+        </div>
+    </div>
+    <div class="form-row mt-3">
+        <div class="col-6">
+            <%= form.label :mainphone, 'Teléfono principal' %> 
+            <%= form.text_field :mainphone, { :class => 'form-control', required: true} %>
+        </div>
+        <div class="col-6">
+            <%= form.label :secondaryphone, 'Teléfono secundario' %> 
+            <%= form.text_field :secondaryphone, { :class => 'form-control', required: false} %>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-5">
+        <div class="col-auto">
+            <a class="btn btn-danger" href="/" role="button">Regresar</a>
+        </div>
+        <div class="col-auto">
+            <%= form.submit 'Guardar', :class => "btn btn-primary" %>
+        </div>
+    </div>
+<%end%>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+      $(function() {
+          // Fetch all the forms we want to apply custom Bootstrap validation styles to
+          var forms = document.getElementsByClassName('needs-validation');
+          // Loop over them and prevent submission
+          var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+              if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add('was-validated');
+            }, false);
+          });
+      })();
+</script>
