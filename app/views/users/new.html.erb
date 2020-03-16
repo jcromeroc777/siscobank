@@ -2,44 +2,52 @@
     <div class="form-row">
         <div class="col-6">
             <%= form.label :typedocument, 'Tipo de persona' %> 
-            <%= form.select :typedocument, options_for_select([["Natural", "Natural"], ["Jurídica", "Jurídica"]], form.object.typedocument), {}, { :class => 'custom-select', required: true} %>
+            <%= form.select :typedocument, options_for_select([["Natural", "Natural"], ["Jurídica", "Jurídica"]], form.object.typedocument), {}, { :class => 'custom-select', required: true, data_value_missing: "Tipo de persona requerido"} %>
+            <div class="invalid-feedback"></div>
         </div>
         <div class="col-6">
             <%= form.label :document, 'Número de documento de identificación' %> 
-            <%= form.text_field :document, { :class => 'form-control', required: true} %>
+            <%= form.text_field :document, { :class => 'form-control', required: true, data_value_missing: "Documento requerido", pattern:"^([0-9]{7,9})$", data_pattern_mismatch:"Documento inválido"} %>
+            <div class="invalid-feedback"></div>
         </div>
     </div>
     <div class="form-row mt-3">
         <div class="col-6">
             <%= form.label :issuedate, 'Fecha de emisión del documento' %> 
-            <%= form.text_field :issuedate, { :class => 'form-control', required: true} %>
+            <%= form.text_field :issuedate, { :class => 'form-control', required: true, data_value_missing: "Fecha de emisión requerida", pattern:"(0?[1-9]|[12][0-9]|3[01])[-\\/]?(0?[1-9]|1[0-2])[-\\/]?((?:19|20)[0-9]{2})", data_pattern_mismatch:"Fecha inválida"} %>
+            <div class="invalid-feedback"></div>
         </div>
         <div class="col-6">
             <%= form.label :expirationdate, 'Fecha de vencimiento del documento' %> 
-            <%= form.text_field :expirationdate, { :class => 'form-control', required: true} %>
+            <%= form.text_field :expirationdate, { :class => 'form-control', required: true, data_value_missing: "Fecha de vencimiento requerida", pattern:"(0?[1-9]|[12][0-9]|3[01])[-\\/]?(0?[1-9]|1[0-2])[-\\/]?((?:19|20)[0-9]{2})", data_pattern_mismatch:"Fecha inválida"} %>
+            <div class="invalid-feedback"></div>
         </div>
     </div>
     <div class="form-row mt-3">
         <div class="col-6">
             <%= form.label :name, 'Nombre' %> 
-            <%= form.text_field :name, { :class => 'form-control', required: true} %>
+            <%= form.text_field :name, { :class => 'form-control', required: true, data_value_missing: "Nombre requerido", pattern:"[a-zA-Z ]{2,100}", data_pattern_mismatch:"Sólo se permite texto"} %>
+            <div class="invalid-feedback"></div>
         </div>
         <div class="col-6">
             <%= form.label :email, 'Correo electrónico' %> 
-            <%= form.text_field :email, { :class => 'form-control', required: true} %>
+            <%= form.text_field :email, { :class => 'form-control', required: true, data_value_missing: "Correo requerido", pattern:"[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z0-9.-]+", data_pattern_mismatch:"Correo inválido"} %>
+            <div class="invalid-feedback"></div>
         </div>
     </div>
     <div class="form-row mt-3">
         <div class="col-6">
             <%= form.label :mainphone, 'Teléfono principal' %> 
-            <%= form.text_field :mainphone, { :class => 'form-control', required: true} %>
+            <%= form.text_field :mainphone, { :class => 'form-control', required: true, data_value_missing: "Teléfono requerido", pattern:"[0][0-9]{3}[0-9]{7}", data_pattern_mismatch:"Teléfono inválido"} %>
+            <div class="invalid-feedback"></div>
         </div>
         <div class="col-6">
             <%= form.label :secondaryphone, 'Teléfono secundario' %> 
-            <%= form.text_field :secondaryphone, { :class => 'form-control', required: false} %>
+            <%= form.text_field :secondaryphone, { :class => 'form-control', required: false, pattern:"[0][0-9]{3}[0-9]{7}", data_pattern_mismatch:"Teléfono inválido"} %>
+            <div class="invalid-feedback"></div>
         </div>
     </div>
-    <div class="row justify-content-center mt-5">
+    <div class="row justify-content-center mt-5 mb-5">
         <div class="col-auto">
             <a class="btn btn-danger" href="/" role="button">Regresar</a>
         </div>
@@ -51,7 +59,7 @@
 
 <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
-      $(function() {
+      (function() {
           // Fetch all the forms we want to apply custom Bootstrap validation styles to
           var forms = document.getElementsByClassName('needs-validation');
           // Loop over them and prevent submission
@@ -60,6 +68,38 @@
               if (form.checkValidity() === false) {
                 event.preventDefault();
                 event.stopPropagation();
+
+                var regExpFecha = /(0?[1-9]|[12][0-9]|3[01])([-\\/ ]?)(0?[1-9]|1[0-2])\2(?:19|20)[0-9]{2}/i
+                //console.log( regExpFecha.test(cedula) ) // return true
+                
+                var ele = form.getElementsByClassName("form-control");
+                for (var i = 0; i < ele.length; i++) {
+                    var msg = "", reason = ele[i].validity;
+
+                    if (reason.valueMissing) {
+                        msg = ele[i].getAttribute("data_value_missing");
+                    }
+                    else if (reason.patternMismatch) {
+                       msg = ele[i].getAttribute("data_pattern_mismatch");
+                    }
+
+                    if (ele[i].nextElementSibling.className == "invalid-feedback") {
+                        ele[i].nextElementSibling.innerText = msg;
+                    } 
+                }
+
+                var select = form.getElementsByClassName("custom-select");
+                var msgCombo = "";
+                var reasonCombo = select[0].validity;
+
+                if (reasonCombo.valueMissing) {
+                    msgCombo = select[0].getAttribute("data_value_missing");
+                }
+                
+                if (select[0].nextElementSibling.className == "invalid-feedback") {
+                    select[0].nextElementSibling.innerText = msgCombo;
+                }
+
               }
               form.classList.add('was-validated');
             }, false);

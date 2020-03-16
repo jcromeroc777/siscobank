@@ -1,8 +1,12 @@
 class UsersController < ApplicationController
     skip_before_action :verify_authenticity_token
 
-    def show
+    def list
         @users = User.all
+    end
+
+    def show
+        @user = User.find(params[:id])
     end
     
     def new
@@ -19,7 +23,7 @@ class UsersController < ApplicationController
                     issuedate: params[:user][:issuedate], expirationdate: params[:user][:expirationdate],
                     name: params[:user][:name], email: params[:user][:email],
                     mainphone: params[:user][:mainphone], secondaryphone: params[:user][:secondaryphone])
-        redirect_to action: "show"
+        redirect_to action: "list"
     end
 
     def update
@@ -28,12 +32,12 @@ class UsersController < ApplicationController
                     issuedate: params[:user][:issuedate], expirationdate: params[:user][:expirationdate],
                     name: params[:user][:name], email: params[:user][:email],
                     mainphone: params[:user][:mainphone], secondaryphone: params[:user][:secondaryphone])
-        redirect_to action: "show"
+        redirect_to action: "list"
     end
 
     def destroy
         @user = User.find(params[:id])
         @user.destroy
-        redirect_to action: "show"
+        redirect_to action: "list"
     end
 end

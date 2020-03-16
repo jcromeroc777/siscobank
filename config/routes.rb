@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  get "/", to: "users#show"
+  get "/", to: "users#list"
   get "users/new", to: "users#new"
+  get "users/show/:id", to: "users#show"
   get "users/edit/:id", to: "users#edit"
   post "users", to: "users#create"
   patch "users/:id", to: "users#update", as: :user
