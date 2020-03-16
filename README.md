@@ -1,24 +1,15 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Para correr la aplicación se necesita seguir los siguientes pasos con la consola:
 
-Things you may want to cover:
+* Clonar el proyecto: git clone https://github.com/jcromeroc777/siscobank.git
 
-* Ruby version
+* Instalar las dependencias: bundle install
 
-* System dependencies
+* Crear la base de datos con las migraciones: rails db:migrate
 
-* Configuration
+* Ejecutar el webpack para los assets del proyecto: ./bin/webpack-dev-server
 
-* Database creation
+* Ejecutar el proyecto: rails server
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Luego de seguir los pasos el proyecto se visualizará en la página: localhost:3000
