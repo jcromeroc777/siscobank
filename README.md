@@ -4,6 +4,8 @@ Para correr la aplicación se necesita seguir los siguientes pasos con la consol
 
 * Clonar el proyecto: git clone https://github.com/jcromeroc777/siscobank.git
 
+* Posicionarse en el proyecto: cd siscobank
+
 * Instalar las dependencias: bundle install
 
 * Crear la base de datos con las migraciones: rails db:migrate
