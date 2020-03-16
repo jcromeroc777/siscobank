@@ -8,6 +8,8 @@ Para correr la aplicación se necesita seguir los siguientes pasos con la consol
 
 * Instalar las dependencias: bundle install
 
+* Instalar las dependencias de node_module: yarn install
+
 * Crear la base de datos con las migraciones: rails db:migrate
 
 * Ejecutar el webpack para los assets del proyecto: ./bin/webpack-dev-server
